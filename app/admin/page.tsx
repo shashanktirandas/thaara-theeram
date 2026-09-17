@@ -238,13 +238,15 @@ export default async function AdminPage() {
               title="Administrators"
               description="Manage who has Platform Admin responsibility and review admin access."
               badge={`${adminCount ?? 0} active`}
-              comingSoon
+              href="/admin/administrators"
+              action="Manage Administrators →"
             />
 
             <AdminCard
               title="Activity & Audit"
               description="Review important platform actions, role changes and administrative activity."
-              comingSoon
+              href="/admin/activity"
+              action="View Activity →"
             />
 
           </div>
