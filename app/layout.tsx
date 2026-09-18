@@ -13,9 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Thaara Theeram",
-  description: "A home for every passion.",
-};
+  title: 'THAARA THEERAM',
+  description: 'A home for every passion.',
+  icons: {
+    icon: '/brand/thaara-mark.png',
+    shortcut: '/brand/thaara-mark.png',
+    apple: '/brand/thaara-mark.png',
+  },
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
