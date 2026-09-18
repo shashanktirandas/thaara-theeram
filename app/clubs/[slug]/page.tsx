@@ -875,6 +875,7 @@ import JoinClubButton from '@/components/clubs/JoinClubButton'
 import ShareClubButton from '@/components/clubs/ShareClubButton'
 import LeaveClubButton from '@/components/clubs/LeaveClubButton'
 import Link from 'next/link'
+import PublicClubHeader from '@/components/clubs/PublicClubHeader'
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -1305,52 +1306,13 @@ export default async function ClubPage({ params }: PageProps) {
           NAVIGATION
       ======================================================== */}
 
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-5 sm:px-8">
-
-          <Link
-            href="/clubs"
-            className="group inline-flex items-center gap-2.5 rounded-xl px-1 py-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#0B3B82]/10"
-          >
-            <ArrowLeft className="h-4 w-4 text-slate-400 transition-transform duration-200 group-hover:-translate-x-0.5 group-hover:text-[#0B3B82]" />
-
-            <span className="text-sm font-bold text-slate-500 transition-colors duration-200 group-hover:text-[#0B3B82]">
-              Clubs
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-3 sm:gap-5">
-            {user ? (
-              <>
-                {(currentClubStatus === 'HEAD' ||
-                  currentClubStatus === 'COORDINATOR' ||
-                  isAdmin) && (
-                  <Link
-                    href={`/clubs/${club.slug}/manage`}
-                    className="hidden rounded-lg px-2 py-2 text-sm font-bold text-[#0B3B82] transition-colors duration-200 hover:bg-blue-50 sm:block"
-                  >
-                    Manage Club
-                  </Link>
-                )}
-
-                <Link
-                  href="/dashboard"
-                  className="rounded-xl bg-[#0B3B82] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-[#092F6A] hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-[#0B3B82]/15"
-                >
-                  Dashboard
-                </Link>
-              </>
-            ) : (
-              <Link
-                href={`/login?returnTo=/clubs/${club.slug}`}
-                className="rounded-xl bg-[#0B3B82] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-[#092F6A] hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-[#0B3B82]/15"
-              >
-                Login
-              </Link>
-            )}
-          </div>
-        </div>
-      </header>
+      <PublicClubHeader
+        clubName={club.name}
+        slug={club.slug}
+        user={!!user}
+        currentClubStatus={currentClubStatus}
+        isAdmin={isAdmin}
+      />
 
       {/* ========================================================
           HERO — CLUB IDENTITY

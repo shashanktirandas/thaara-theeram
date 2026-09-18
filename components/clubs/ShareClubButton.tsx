@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import QRCode from 'qrcode'
 
 type ShareClubButtonProps = {
@@ -129,7 +130,10 @@ export default function ShareClubButton({
   const [qrCode, setQrCode] = useState('')
   const [busyAction, setBusyAction] =
     useState<string | null>(null)
-
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+  setMounted(true)
+}, [])
   const [clubUrl, setClubUrl] =
     useState(`/clubs/${slug}`)
 
@@ -1100,45 +1104,50 @@ export default function ShareClubButton({
         Share Club
       </button>
 
-      {open && (
-        <div
-          className="
-            fixed inset-0 z-50
-            flex items-center justify-center
-            bg-slate-950/75
-            px-4 py-5
-            backdrop-blur-sm
-          "
-          onMouseDown={event => {
-            if (
-              event.target ===
-              event.currentTarget
-            ) {
-              setOpen(false)
-            }
-          }}
-        >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="share-club-title"
-            className="
-              w-full
-              max-w-lg
-              max-h-[calc(100vh-40px)]
-              overflow-y-auto
-              rounded-[2rem]
-              bg-white
-              shadow-2xl
-              overscroll-contain
-
-              [scrollbar-width:none]
-              [-ms-overflow-style:none]
-
-              [&::-webkit-scrollbar]:hidden
-            "
-          >
-            <div className="p-6 sm:p-8">
+      {mounted &&
+  open &&
+  createPortal(
+    <div
+      className="
+        fixed
+        inset-0
+        z-[9999]
+        flex
+        items-center
+        justify-center
+        bg-slate-950/75
+        px-4
+        py-5
+        backdrop-blur-sm
+      "
+      onMouseDown={event => {
+        if (
+          event.target ===
+          event.currentTarget
+        ) {
+          setOpen(false)
+        }
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="share-club-title"
+        className="
+          w-full
+          max-w-lg
+          max-h-[calc(100dvh-40px)]
+          overflow-y-auto
+          rounded-[2rem]
+          bg-white
+          shadow-2xl
+          overscroll-contain
+          [scrollbar-width:none]
+          [-ms-overflow-style:none]
+          [&::-webkit-scrollbar]:hidden
+        "
+      >
+        <div className="p-6 sm:p-8">
 
               {/* -----------------------------------------
                   HEADER
@@ -1631,9 +1640,11 @@ export default function ShareClubButton({
               </button>
 
             </div>
-          </div>
-        </div>
-      )}
+      </div>
+    </div>,
+    document.body
+  )}
     </>
   )
 }
+
